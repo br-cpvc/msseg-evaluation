@@ -1,0 +1,6 @@
+[submodule "deps/wmhchallenge"]
+	path = deps/wmhchallenge
+	url = https://github.com/hjkuijf/wmhchallenge.git
+[submodule "deps/MSSEG"]
+	path = deps/MSSEG
+	url = ../MSSEG.git

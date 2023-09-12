@@ -1,0 +1,38 @@
+#! /usr/bin/octave -fq
+
+% the following is based on the example.m file include in MSSEG
+
+clc;
+clear all;
+
+% sudo apt install -y octave octave-image octave-statistics
+warning("off", "Octave:possible-matlab-short-circuit-operator");
+% see: https://docs.octave.org/v8.3.0/Issuing-Warnings.html
+
+pkg load image;
+pkg load statistics;
+
+warning("off", "Octave:shadowed-function");
+warning("off", "Octave:function-name-clash");
+warning("off", "Octave:legacy-function");
+
+cd('deps/MSSEG');
+
+% image location
+if (nargin != 3)
+  disp("three arguments are needed: T1 MASK FLAIR");
+  exit(1);
+endif
+arg_list = argv ();
+t1_path = strcat("../../", arg_list{1});
+brainmask_path = strcat("../../", arg_list{2});
+flair_path = strcat("../../", arg_list{3});
+
+% MSSEG OPTIONS
+options.gpu = 0;          % use gpu
+options.info = 1;         % Display info
+options.debug = 1;        % save intermediate files.
+
+% example using both T1 and FLAIR
+[segmentation, seg_pve] = msseg(t1_path, brainmask_path, flair_path, options);
+
