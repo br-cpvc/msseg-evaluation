@@ -17,7 +17,10 @@ def get_group(image_id):
             return "AMS " + scanner
 
 
-df = pd.read_csv("measurements.csv")
+measurements = "report/output/data/measurements.csv"
+figdir = 'report/output/figures'
+
+df = pd.read_csv(measurements)
 df['group'] = df['image_id'].apply(get_group)
 x_label = "Matching voxels in second image"
 measurements = [
@@ -28,11 +31,10 @@ measurements = [
     'F1',
 ]
 
-scatterplot = True
-# scatterplot = False
 # measurements = [measurements[1]]
 
-if scatterplot:
+scatterplots = True
+if scatterplots:
     for m in measurements:
         fig, ax = plt.subplots(figsize=(8, 6))
         for n, grp in df.groupby('group'):
@@ -40,8 +42,14 @@ if scatterplot:
         ax.set_xlabel(x_label)
         ax.set_ylabel(m)
         ax.legend()  # title="Label")
-    plt.show()
-else:
+        # plot filename should be markdown freindly
+        plotname = m.replace(" ", "_").replace("%", "pct")
+        plt.savefig(figdir + '/scatter_plots/' + plotname + '.svg')
+    # plt.show()
+
+boxplots = True
+if boxplots:
+    plt.rc('xtick', labelsize=6)
     for m in measurements:
         fig = plt.figure(label=m)
         dfm = df[[m, 'group']]
@@ -49,4 +57,7 @@ else:
         grps.boxplot(subplots=False, vert=True, patch_artist=True)
         fig.axes[0].yaxis.grid(True)
         plt.plot()
-    plt.show()
+        # plot filename should be markdown freindly
+        plotname = m.replace(" ", "_").replace("%", "pct")
+        plt.savefig(figdir + '/boxplots/' + plotname + '.svg')
+    # plt.show()
