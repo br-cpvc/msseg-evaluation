@@ -57,7 +57,7 @@ overwrite=true
 
 if [[ $overwrite = true || ! -f "$dir/result_LPI.nii.gz" ]]; then
 start=`date +%s`
-./msseg-cli "$T1_LPI" "$MASK" "$FLAIR_LPI"
+./msseg-cli "../../$T1_LPI" "../../$MASK" "../../$FLAIR_LPI"
 cp -a "$dir/pre/.run/T1_LPI_MSSEG_refilled_candidates.nii.gz" "$dir/result_LPI.nii.gz"
 end=`date +%s`
 runtime=$((end-start))
