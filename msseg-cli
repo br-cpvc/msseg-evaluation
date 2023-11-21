@@ -32,6 +32,7 @@ flair_path = arg_list{3};
 options.gpu = 0;          % use gpu
 options.info = 1;         % Display info
 options.debug = 1;        % save intermediate files.
+options.deterministic = 1;
 
 % example using both T1 and FLAIR
 [segmentation, seg_pve] = msseg(t1_path, brainmask_path, flair_path, options);
